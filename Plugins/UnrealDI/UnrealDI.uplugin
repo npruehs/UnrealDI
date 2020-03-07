@@ -1,0 +1,26 @@
+{
+	"FileVersion" : 1,
+	"Version" : 1,
+	"VersionName" : "1.0",
+	"FriendlyName" : "UnrealDI",
+	"Description" : "Dependency injection library for Unreal Engine 4.",
+	"Category" : "UnrealDI",
+	"CreatedBy" : "Nick Pruehs",
+	"CreatedByURL" : "https://github.com/npruehs",
+	"DocsURL" : "",
+	"MarketplaceURL" : "",
+	"SupportURL" : "",
+	"EnabledByDefault" : false,
+	"CanContainContent" : false,
+	"IsBetaVersion" : false,
+	"Installed" : false,
+	"Modules" :
+	[
+		{
+			"Name" : "UnrealDI",
+			"Type" : "Runtime",
+			"LoadingPhase" : "Default",
+			"WhitelistPlatforms": [ "Win64" ]
+		}
+	]
+}
