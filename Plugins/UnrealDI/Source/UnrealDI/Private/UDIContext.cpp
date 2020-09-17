@@ -6,20 +6,6 @@
 
 #include "UDILog.h"
 
-UObject* UUDIContext::Construct(UClass* Class)
-{
-    UObject* Object = NewObject<UObject>(this, Class);
-    InjectServices(Object);
-    return Object;
-}
-
-AActor* UUDIContext::Spawn(UWorld* World, UClass* Class)
-{
-    AActor* Actor = World->SpawnActor(Class);
-    InjectServices(Actor);
-    return Actor;
-}
-
 UObject* UUDIContext::GetService(UClass* Class)
 {
     UObject** Service = Services.Find(Class->GetName());

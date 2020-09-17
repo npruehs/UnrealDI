@@ -15,13 +15,29 @@ public:
     template <class T>
 	T* Construct()
     {
-        return Cast<T>(Construct(T::StaticClass()));
+        return Construct<T>(T::StaticClass());
     }
     
     template <class T>
+    T* Construct(TSubclassOf<T> Class)
+    {
+        UObject* Object = NewObject<UObject>(this, Class);
+        InjectServices(Object);
+        return Cast<T>(Object);
+    }
+
+    template <class T>
     T* Spawn(UWorld* World)
     {
-        return Cast<T>(Spawn(World, T::StaticClass()));
+        return Spawn<T>(World, T::StaticClass());
+    }
+
+    template <class T>
+    T* Spawn(UWorld* World, TSubclassOf<T> Class)
+    {
+        AActor* Actor = World->SpawnActor(Class);
+        InjectServices(Actor);
+        return Cast<T>(Actor);
     }
 
     template <class T>
@@ -30,8 +46,6 @@ public:
         return Cast<T>(GetService(T::StaticClass()));
     }
 
-    UObject* Construct(UClass* Class);
-    AActor* Spawn(UWorld* World, UClass* Class);
     UObject* GetService(UClass* Class);
     void RegisterService(UObject* Service);
     void InjectServices(UObject* Object);
