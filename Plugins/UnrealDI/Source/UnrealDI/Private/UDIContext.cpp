@@ -39,15 +39,15 @@ void UUDIContext::InjectServices(UObject* Object)
 
     UE_LOG(LogUDI, Log, TEXT("Constructing a new %s..."), *Class->GetName());
 
-    for (TFieldIterator<UProperty> PropIt(Class); PropIt; ++PropIt)
+    for (TFieldIterator<FProperty> PropIt(Class); PropIt; ++PropIt)
     {
-        UProperty* Property = *PropIt;
+        FProperty* Property = *PropIt;
 
         if (Property->HasMetaData(TEXT("Inject")))
         {
             UE_LOG(LogUDI, Log, TEXT("Property %s is injected."), *Property->GetName());
 
-            UObjectProperty* ObjectProperty = Cast<UObjectProperty>(Property);
+            FObjectProperty* ObjectProperty = CastFieldChecked<FObjectProperty>(Property);
 
             if (ObjectProperty != nullptr)
             {
