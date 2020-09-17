@@ -14,9 +14,14 @@ UObject* UUDIContext::GetService(UClass* Class)
 
 void UUDIContext::RegisterService(UObject* Service)
 {
-    Services.Add(Service->GetClass()->GetName(), Service);
+    RegisterService(Service, Service->GetClass());
+}
 
-    UE_LOG(LogUDI, Log, TEXT("Registering %s as service of type %s."), *Service->GetName(), *Service->GetClass()->GetName());
+void UUDIContext::RegisterService(UObject* Service, UClass* ServiceClass)
+{
+    Services.Add(ServiceClass->GetName(), Service);
+
+    UE_LOG(LogUDI, Log, TEXT("Registering %s as service of type %s."), *Service->GetName(), *ServiceClass->GetName());
 }
 
 void UUDIContext::InjectServices(UObject* Object)
@@ -62,8 +67,14 @@ void UUDIContext::InjectServices(UObject* Object)
         }
     }
 
-    if (Class->HasMetaData(TEXT("InjectedService")))
+    while (Class)
     {
-        RegisterService(Object);
+        if (Class->HasMetaData(TEXT("Inject")))
+        {
+            RegisterService(Object, Class);
+            return;
+        }
+        
+        Class = Class->GetSuperClass();
     }
 }

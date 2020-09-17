@@ -53,4 +53,6 @@ public:
 private:
     UPROPERTY()
     TMap<FString, UObject*> Services;
+
+    void RegisterService(UObject* Service, UClass* ServiceClass);
 };
