@@ -36,7 +36,7 @@ void UUDIContext::InjectServices(UObject* Object)
 
         if (Property->HasMetaData(TEXT("Inject")))
         {
-            UE_LOG(LogUDI, Log, TEXT("Property %s is injected."), *Property->GetName());
+            UE_LOG(LogUDI, Verbose, TEXT("Property %s is injected."), *Property->GetName());
 
             FObjectProperty* ObjectProperty = CastFieldChecked<FObjectProperty>(Property);
 
@@ -46,7 +46,7 @@ void UUDIContext::InjectServices(UObject* Object)
 
                 if (Service != nullptr)
                 {
-                    UE_LOG(LogUDI, Log, TEXT("Injecting property %s with %s."), *Property->GetName(), *Service->GetName());
+                    UE_LOG(LogUDI, Log, TEXT("Injecting %s into property %s."), *Service->GetName(), *Property->GetName());
 
                     UObject* Address = ObjectProperty->ContainerPtrToValuePtr<UObject>(Object);
                     ObjectProperty->SetObjectPropertyValue(Address, Service);
@@ -63,7 +63,7 @@ void UUDIContext::InjectServices(UObject* Object)
         }
         else
         {
-            UE_LOG(LogUDI, Verbose, TEXT("%s is not injected."), *Property->GetName());
+            UE_LOG(LogUDI, Verbose, TEXT("Property %s is not injected."), *Property->GetName());
         }
     }
 
